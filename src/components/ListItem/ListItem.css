@@ -1,0 +1,17 @@
+.listitem {
+    width: 300px;
+    min-height: 230px;
+    padding: 15px;
+    background: #c4c4c4;
+    border-radius: 3px;
+}
+
+.listitem__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.listitem__edit {
+    color: #1e98d7;
+    cursor: pointer;
+}

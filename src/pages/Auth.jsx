@@ -1,15 +1,16 @@
 import Button from '@avtopro/button/dist/index';
 import TextInput from '@avtopro/text-input/dist/index';
 import React, { useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
-import { useStore } from '../../context/mainContext';
-import './Auth.css';
+import { useStore } from '../context/mainContext';
 
 const Login = () => {
     const { user } = useStore();
     const [values, setValues] = useState({});
     const [authMode, setAuthMode] = useState(true);
     const navigate = useNavigate();
+
     const handleUser = (e) => {
         const { value } = e.target;
         const { name } = e.target;
@@ -19,16 +20,20 @@ const Login = () => {
         }));
     };
 
-    const onSubmitLogin = (e) => {
+    const onSubmitLogin = async (e) => {
         e.preventDefault();
-        user.login(values);
-        navigate('/');
+        await user.login(values);
     };
+
+    if (user.state === 'done') {
+        navigate('/');
+    }
 
     const onSubmitReg = (e) => {
         e.preventDefault();
-        user.reg(values);
+        user.register(values);
     };
+
     return (
         <div className="auth__wrapper">
             <div className="auth__tabs">
@@ -86,4 +91,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default observer(Login);

@@ -3,7 +3,7 @@
 import qs from 'query-string';
 import API from '../API';
 
-class ModelCar {
+class CarService {
     async getModelName() {
         try {
             const data = await API.get('Model/GetModels');
@@ -89,4 +89,4 @@ class ModelCar {
         }
     }
 }
-export default ModelCar;
+export default CarService;

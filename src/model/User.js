@@ -3,18 +3,16 @@ import { makeAutoObservable, runInAction } from 'mobx';
 class User {
     isAuth = false;
 
-    name = 'string';
-
-    password = 'string';
+    state = '';
 
     constructor(Requests) {
         this.services = new Requests();
         makeAutoObservable(this);
     }
 
-    login(params) {
+    logout() {
         try {
-            const { data } = this.services.sendLoginData(params);
+            const { data } = this.services.logout();
             runInAction(() => {
                 this.isAuth = data;
                 this.state = 'done';
@@ -22,6 +20,21 @@ class User {
         } catch (error) {
             this.state = 'error';
         }
+    }
+
+    async login(params) {
+        try {
+            this.state = 'loading';
+            const data = await this.services.sendLoginData(params);
+            runInAction(() => {
+                this.isAuth = data;
+                this.state = 'done';
+            });
+            return data;
+        } catch (error) {
+            this.state = 'error';
+        }
+        return null;
     }
 
     register(params) {

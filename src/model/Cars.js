@@ -1,6 +1,6 @@
 import { makeAutoObservable, observable, runInAction } from 'mobx';
 
-class Models {
+class Cars {
     modelsList = [];
 
     modelEngines = [];
@@ -106,4 +106,4 @@ class Models {
         }
     }
 }
-export default Models;
+export default Cars;

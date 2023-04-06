@@ -13,16 +13,4 @@ const API = axios.create({
     withCredentials: true
 });
 
-// const onRequestSuccess = async (config) => {
-//     if (config?.headers) {
-//         config.headers.Authorization = `Bearer ${JSON.parse(
-//             localStorage.getItem('token')
-//         )}`;
-//     }
-
-//     return config;
-// };
-
-// API.interceptors.request.use(onRequestSuccess);
-
 export default API;

@@ -2,28 +2,15 @@
 /* eslint-disable class-methods-use-this */
 import API from '../API';
 
-class ModelUser {
+class UserService {
     sendLoginData({ email, password }) {
-        API.post(
-            'User/Login',
-            {
-                name: email,
-                password
-            },
-            {
-                Accept: '*/*',
-                'content-Type': 'application/json'
-            }
-        )
+        API.post('User/Login', {
+            name: email,
+            password
+        })
             .then((response) => {
                 localStorage.setItem('token', response.data);
-                if (response.data) {
-                    API.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
-                        'token'
-                    )}`;
-                } else {
-                    delete API.defaults.headers.common.Authorization;
-                }
+                return response;
             })
             .catch((error) => console.log(error));
     }
@@ -42,18 +29,13 @@ class ModelUser {
         )
             .then((response) => {
                 console.log(response);
-
-                // localStorage.setItem('token', response.data);
-                // if (response.data) {
-                //     API.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
-                //         'token'
-                //     )}`;
-                // } else {
-                //     delete API.defaults.headers.common.Authorization;
-                // }
             })
             .catch((error) => console.log(error));
     }
+
+    logout() {
+        localStorage.removeItem('token');
+    }
 }
 
-export default ModelUser;
+export default UserService;

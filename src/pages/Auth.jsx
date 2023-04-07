@@ -1,15 +1,16 @@
+import React, { useState, useEffect } from 'react';
 import Button from '@avtopro/button/dist/index';
 import TextInput from '@avtopro/text-input/dist/index';
-import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
+import Modal from '@avtopro/modal/dist/index';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../context/mainContext';
 
-const Login = () => {
+const Auth = () => {
     const { user } = useStore();
+    const navigate = useNavigate();
     const [values, setValues] = useState({});
     const [authMode, setAuthMode] = useState(true);
-    const navigate = useNavigate();
 
     const handleUser = (e) => {
         const { value } = e.target;
@@ -25,18 +26,25 @@ const Login = () => {
         await user.login(values);
     };
 
-    if (user.state === 'done') {
-        navigate('/');
-    }
-
-    const onSubmitReg = (e) => {
+    const onSubmitReg = async (e) => {
         e.preventDefault();
-        user.register(values);
+        await user.register(values);
     };
 
+    useEffect(() => {
+        if (user.state === 'done') {
+            navigate('/');
+        }
+    }, [user.state]);
+
     return (
-        <div className="auth__wrapper">
-            <div className="auth__tabs">
+        <Modal style={{ width: '400px !important' }} className="auth__wrapper">
+            <div
+                className="auth__tabs grid-base"
+                style={{
+                    '--g-columns': '2'
+                }}
+            >
                 <Button type="button" onClick={() => setAuthMode(true)}>
                     Sign In
                 </Button>
@@ -46,8 +54,9 @@ const Login = () => {
             </div>
             <div className="auth__form">
                 {authMode ? (
-                    <form onSubmit={onSubmitLogin}>
+                    <form className="grid-base" onSubmit={onSubmitLogin}>
                         <TextInput
+                            className="g-col-12"
                             value={values.email}
                             name="email"
                             onChange={handleUser}
@@ -55,19 +64,21 @@ const Login = () => {
                             placeholder="E-mail..."
                         />
                         <TextInput
+                            className="g-col-12"
                             value={values.password}
                             name="password"
                             onChange={handleUser}
                             type="password"
                             placeholder="Password..."
                         />
-                        <Button theme="prime" type="submit">
+                        <Button className="g-col-12" theme="blue" type="submit">
                             Login
                         </Button>
                     </form>
                 ) : (
-                    <form onSubmit={onSubmitReg}>
+                    <form className="grid-base" onSubmit={onSubmitReg}>
                         <TextInput
+                            className="g-col-12"
                             value={values.email}
                             name="email"
                             onChange={handleUser}
@@ -75,20 +86,21 @@ const Login = () => {
                             placeholder="E-mail..."
                         />
                         <TextInput
+                            className="g-col-12"
                             value={values.password}
                             name="password"
                             onChange={handleUser}
                             type="password"
                             placeholder="Password..."
                         />
-                        <Button theme="prime" type="submit">
+                        <Button className="g-col-12" theme="blue" type="submit">
                             Register
                         </Button>
                     </form>
                 )}
             </div>
-        </div>
+        </Modal>
     );
 };
 
-export default observer(Login);
+export default observer(Auth);

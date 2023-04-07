@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@avtopro/banner": "^0.6.7-68cce67.0",
     "@avtopro/button": "^0.9.7-68cce67.0",
+    "@avtopro/css-grid": "^0.4.0",
     "@avtopro/icons": "^0.24.0-68cce67.0",
     "@avtopro/item-card": "^0.1.0-a9a6c89.0",
     "@avtopro/modal": "^0.8.7-68cce67.0",

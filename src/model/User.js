@@ -11,15 +11,7 @@ class User {
     }
 
     logout() {
-        try {
-            const { data } = this.services.logout();
-            runInAction(() => {
-                this.isAuth = data;
-                this.state = 'done';
-            });
-        } catch (error) {
-            this.state = 'error';
-        }
+        this.services.logout();
     }
 
     async login(params) {
@@ -37,9 +29,9 @@ class User {
         return null;
     }
 
-    register(params) {
+    async register(params) {
         try {
-            const { data } = this.services.sendRegData(params);
+            const { data } = await this.services.sendRegData(params);
             runInAction(() => {
                 this.isAuth = data;
                 this.state = 'done';

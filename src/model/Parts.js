@@ -35,7 +35,7 @@ class Parts {
         return this.newCardList;
     }
 
-    sendCard({ mileage, modelComplect, modelName }, { parts }) {
+    async sendCard({ mileage, modelComplect, modelName }, { parts }) {
         const card = {
             mileage,
             complecationName: modelComplect,
@@ -43,7 +43,7 @@ class Parts {
             parts
         };
         try {
-            const { data } = this.services.sendCard(card);
+            const { data } = await this.services.sendCard(card);
             runInAction(() => {
                 this.carCards = data;
                 this.state = 'done';

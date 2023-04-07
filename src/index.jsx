@@ -12,6 +12,8 @@ import '@avtopro/modal/dist/style.css';
 import '@avtopro/select/dist/style.css';
 import '@avtopro/number-input/dist/style.css';
 import '@avtopro/item-card/dist/style.css';
+import '@avtopro/banner/dist/style.css';
+import '@avtopro/css-grid/dist/index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

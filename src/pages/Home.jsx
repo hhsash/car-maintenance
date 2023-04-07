@@ -1,23 +1,19 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import ItemCard from '@avtopro/item-card/dist/index';
 import Button from '@avtopro/button/dist/index';
-import Modal from '@avtopro/modal/dist/index';
-import TextInput from '@avtopro/text-input/dist/index';
+import Banner from '@avtopro/banner/dist/index';
 import RobotPreloader from '@avtopro/preloader/dist/index';
 import SearchForm from '../components/SearchForm/SearchForm';
 import { useStore } from '../context/mainContext';
 import EditModal from '../components/EditModal/EditModal';
+import CarCard from '../components/CarCard/CarCard';
 
 const Home = () => {
-    const { partsList } = useStore();
+    const navigate = useNavigate();
+    const { partsList, user } = useStore();
     const [openEditModal, setOpenEditModal] = useState(false);
     const [currentEdit, setCurrentEdit] = useState({});
-    const [changedMileage, setChangedMileage] = useState(currentEdit.mileage);
 
     useEffect(() => {
         partsList.getCards();
@@ -25,6 +21,19 @@ const Home = () => {
 
     return (
         <div>
+            <div className="header grid-base">
+                <h1 className="g-col-10">Car Maintenance</h1>
+                <Button
+                    square
+                    theme="danger"
+                    onClick={() => {
+                        user.logout();
+                        navigate('/login');
+                    }}
+                >
+                    Log out
+                </Button>
+            </div>
             {openEditModal && (
                 <EditModal
                     currentEdit={currentEdit}
@@ -36,59 +45,29 @@ const Home = () => {
                 <RobotPreloader title="Loading..." />
             )}
             {partsList.state === 'done' && (
-                <div className="listitems">
+                <div>
                     {partsList.searchFilter.length > 0 ? (
-                        partsList.searchFilter.map((item) => (
-                            <ItemCard
-                                title={
-                                    <div>
-                                        <span>
-                                            {item.modelName}{' '}
-                                            {item.complecationName}
-                                        </span>
-                                        <p>{item.mileage} km</p>
-                                    </div>
-                                }
-                                controls={[
-                                    <span
-                                        key="1"
-                                        onClick={() => {
-                                            setCurrentEdit({
-                                                ...item
-                                            });
-                                            setOpenEditModal((prev) => !prev);
-                                        }}
-                                    >
-                                        Update
-                                    </span>,
-                                    <Button
-                                        key="2"
-                                        theme="danger"
-                                        type="button"
-                                        onClick={() => {
-                                            partsList.deleteCard(item);
-                                        }}
-                                    >
-                                        Delete
-                                    </Button>
-                                ]}
-                                key={item.id}
-                            >
-                                <div className="itemcard__block">
-                                    <ul>
-                                        {item.parts.map((part) => (
-                                            <li key={part.id}>
-                                                {part.partName} - {part.count}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </ItemCard>
-                        ))
+                        <div
+                            className="grid-base"
+                            style={{
+                                rowGap: '20px'
+                            }}
+                        >
+                            {partsList.searchFilter.map((item) => (
+                                <CarCard
+                                    key={item.id}
+                                    item={item}
+                                    setCurrentEdit={setCurrentEdit}
+                                    setOpenEditModal={setOpenEditModal}
+                                />
+                            ))}
+                        </div>
                     ) : (
-                        <p style={{ textAlign: 'center' }}>
-                            Cards not found...
-                        </p>
+                        <Banner header="Cards not found!" mode="attention">
+                            <div>
+                                Add new cards and they will be displayed here.
+                            </div>
+                        </Banner>
                     )}
                 </div>
             )}

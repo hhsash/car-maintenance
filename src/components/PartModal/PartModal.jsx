@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import Modal from '@avtopro/modal/dist/index';
@@ -15,7 +14,7 @@ const PartModal = ({ setOpenModal }) => {
         part: []
     });
     const [part, setPart] = useState({ parts: [] });
-    const [count, setCount] = useState(1);
+    const [count, setCount] = useState('');
 
     const handleModelName = (newValue) => {
         setValue((prevState) => ({
@@ -102,11 +101,19 @@ const PartModal = ({ setOpenModal }) => {
     };
 
     return (
-        <Modal onClose={() => handleCloseModal()} closeOnClick="true">
+        <Modal
+            size="wider"
+            onClose={() => handleCloseModal()}
+            closeOnClick="true"
+        >
             <h3 className="modal__title">New List Item</h3>
-            <div className="select__wrapper">
+            <div
+                className="grid-base"
+                style={{
+                    '--g-columns': '2'
+                }}
+            >
                 <Select
-                    className="modal__dropdown"
                     searchable="true"
                     placeholder="Model"
                     onChange={(_, newValue) => handleModelName(newValue)}
@@ -118,7 +125,6 @@ const PartModal = ({ setOpenModal }) => {
                     ))}
                 </Select>
                 <Select
-                    className="modal__dropdown"
                     placeholder="Engine"
                     onChange={(_, newValue) => handleEngineName(newValue)}
                 >
@@ -129,7 +135,6 @@ const PartModal = ({ setOpenModal }) => {
                     ))}
                 </Select>
                 <Select
-                    className="modal__dropdown"
                     placeholder="Complectation"
                     onChange={(_, newValue) => handleModelComplect(newValue)}
                 >
@@ -140,7 +145,6 @@ const PartModal = ({ setOpenModal }) => {
                     ))}
                 </Select>
                 <Select
-                    className="modal__dropdown"
                     placeholder="Part Groups"
                     onChange={(_, newValue) => handlePartsGroups(newValue)}
                 >
@@ -151,7 +155,6 @@ const PartModal = ({ setOpenModal }) => {
                     ))}
                 </Select>
                 <Select
-                    className="modal__dropdown"
                     placeholder="Part Sub Groups"
                     onChange={(_, newValue) => handlePartsSubGroups(newValue)}
                 >
@@ -168,10 +171,10 @@ const PartModal = ({ setOpenModal }) => {
                 />
             </div>
             <div className="parts__wrapper">
-                <div className="parts__add">
+                <div className="parts__add grid-base">
                     <Select
-                        className="modal__dropdown"
-                        placeholder="Parts"
+                        className="g-col-7"
+                        placeholder="Parts..."
                         onChange={(_, newValue) => handleParts(newValue)}
                     >
                         {models.parts.map((item) => (
@@ -181,13 +184,14 @@ const PartModal = ({ setOpenModal }) => {
                         ))}
                     </Select>
                     <TextInput
+                        className="g-col-4"
                         value={count}
                         type="number"
                         min="1"
                         onChange={(e) => setCount(+e.target.value)}
                         placeholder="Count..."
                     />
-                    <Button onClick={addPart} theme="blue">
+                    <Button className="g-col-1" onClick={addPart} theme="blue">
                         +
                     </Button>
                 </div>
@@ -207,14 +211,19 @@ const PartModal = ({ setOpenModal }) => {
                     </ul>
                 </div>
             </div>
-            <div className="modal__controls">
+            <div className="modal__controls grid-base">
                 <Button
+                    className="g-col-6"
                     onClick={() => setOpenModal((prev) => !prev)}
                     theme="inverse"
                 >
                     Cancel
                 </Button>
-                <Button onClick={() => addCard()} theme="prime">
+                <Button
+                    className="g-col-6"
+                    onClick={() => addCard()}
+                    theme="prime"
+                >
                     Add
                 </Button>
             </div>

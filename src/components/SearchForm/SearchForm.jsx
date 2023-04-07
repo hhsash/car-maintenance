@@ -3,14 +3,11 @@ import Button from '@avtopro/button/dist/index';
 import TextInput from '@avtopro/text-input/dist/index';
 import Slider from '@avtopro/slider/dist/index';
 import { observer } from 'mobx-react-lite';
-import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../context/mainContext';
 import PartModal from '../PartModal/PartModal';
-import './SearchForm.css';
 
 const SearchForm = () => {
-    const navigate = useNavigate();
-    const { models, user, partsList } = useStore();
+    const { models, partsList } = useStore();
     const [openModal, setOpenModal] = useState(false);
     const [openFilter, setOpenFilter] = useState(false);
 
@@ -18,8 +15,6 @@ const SearchForm = () => {
         setOpenModal((prev) => !prev);
         models.getModels();
     };
-
-    console.log(partsList.minMaxValue);
 
     const slider = (value) => {
         if (value[0] === 0 && value[1] === 100) {
@@ -32,40 +27,33 @@ const SearchForm = () => {
 
     return (
         <>
-            <button
-                type="button"
-                onClick={() => {
-                    user.logout();
-                    navigate('/login');
-                }}
-            >
-                Logout
-            </button>
-            <div className="search__wrapper">
+            <div className="search__wrapper grid-base">
                 <TextInput
                     value={partsList.search}
                     onChange={(e) => {
                         partsList.search = e.target.value;
                     }}
                     type="text"
-                    className="search__input"
+                    className="search__input g-col-10"
                     autoFocus
                     placeholder="Enter list title..."
                 />
                 <Button
                     onClick={() => handleOpenModal()}
-                    className="search__add"
+                    className="search__add g-col-1"
                     theme="telegram"
                 >
                     +
                 </Button>
-                <Button
-                    onClick={() => setOpenFilter((prev) => !prev)}
-                    className="search__filter"
-                    theme="inverse"
-                >
-                    Filter
-                </Button>
+                {partsList.carCards.length > 0 && (
+                    <Button
+                        onClick={() => setOpenFilter((prev) => !prev)}
+                        className="search__filter g-col-1"
+                        theme="inverse"
+                    >
+                        Filter
+                    </Button>
+                )}
             </div>
             <div className="filter__wrapper">
                 {openFilter && (

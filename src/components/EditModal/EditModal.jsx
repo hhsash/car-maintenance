@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@avtopro/button/dist/index';
 import Modal from '@avtopro/modal/dist/index';
-import TextInput from '@avtopro/text-input/dist/index';
+import NumberInput from '@avtopro/number-input/dist/index';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../context/mainContext';
 
@@ -10,36 +10,40 @@ const EditModal = ({ currentEdit, setOpenEditModal }) => {
     const [changedMileage, setChangedMileage] = useState(currentEdit.mileage);
 
     return (
-        <Modal closeOnClick="true">
-            <p>
+        <Modal
+            size="wide"
+            onClose={() => setOpenEditModal()}
+            closeOnClick="true"
+        >
+            <h3 className="modal__title">
                 {currentEdit.modelName} {currentEdit.complecationName}
-            </p>
+            </h3>
             <p>
                 Mileage: {currentEdit.mileage} km
                 <br />
                 Edit mileage:
             </p>
-            <TextInput
+            <NumberInput
                 value={changedMileage}
-                type="number"
                 placeholder="Mileage..."
                 onChange={(e) => setChangedMileage(e.target.value)}
             />
-            <div className="modal__controls">
+            <div className="modal__controls grid-base">
                 <Button
                     onClick={() => setOpenEditModal((prev) => !prev)}
                     theme="inverse"
+                    className="g-col-6"
                 >
                     Cancel
                 </Button>
                 <Button
-                    type="submit"
                     onClick={async () => {
                         await partsList.updateCard(currentEdit, changedMileage);
                         await partsList.getCards();
                         setOpenEditModal((prev) => !prev);
                     }}
                     theme="prime"
+                    className="g-col-6"
                 >
                     Add
                 </Button>

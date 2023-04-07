@@ -3,13 +3,12 @@ import './App.css';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import Login from './pages/Auth';
+import Auth from './pages/Auth';
 import PrivateRoute from './PrivateRoute';
 
 const App = () => {
     return (
         <div className="container">
-            <h1>Car Maintenance</h1>
             <Routes>
                 <Route
                     path="/"
@@ -19,7 +18,7 @@ const App = () => {
                         </PrivateRoute>
                     }
                 />
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<Auth />} />
                 <Route path="*" element={<p>Theres nothing here: 404!</p>} />
             </Routes>
         </div>

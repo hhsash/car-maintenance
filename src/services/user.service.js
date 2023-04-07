@@ -3,8 +3,8 @@
 import API from '../API';
 
 class UserService {
-    sendLoginData({ email, password }) {
-        API.post('User/Login', {
+    async sendLoginData({ email, password }) {
+        await API.post('User/Login', {
             name: email,
             password
         })

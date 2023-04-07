@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Button from '@avtopro/button/dist/index';
 import TextInput from '@avtopro/text-input/dist/index';
 import { observer } from 'mobx-react-lite';
@@ -24,18 +24,15 @@ const Auth = () => {
     const onSubmitLogin = async (e) => {
         e.preventDefault();
         await user.login(values);
+        if (user.state === 'done') {
+            navigate('/');
+        }
     };
 
     const onSubmitReg = async (e) => {
         e.preventDefault();
         await user.register(values);
     };
-
-    useEffect(() => {
-        if (user.state === 'done') {
-            navigate('/');
-        }
-    }, [user.state]);
 
     return (
         <Modal style={{ width: '400px !important' }} className="auth__wrapper">
@@ -57,7 +54,6 @@ const Auth = () => {
                     <form className="grid-base" onSubmit={onSubmitLogin}>
                         <TextInput
                             className="g-col-12"
-                            value={values.email}
                             name="email"
                             onChange={handleUser}
                             type="text"
@@ -65,7 +61,6 @@ const Auth = () => {
                         />
                         <TextInput
                             className="g-col-12"
-                            value={values.password}
                             name="password"
                             onChange={handleUser}
                             type="password"
@@ -79,7 +74,6 @@ const Auth = () => {
                     <form className="grid-base" onSubmit={onSubmitReg}>
                         <TextInput
                             className="g-col-12"
-                            value={values.email}
                             name="email"
                             onChange={handleUser}
                             type="text"
@@ -87,7 +81,6 @@ const Auth = () => {
                         />
                         <TextInput
                             className="g-col-12"
-                            value={values.password}
                             name="password"
                             onChange={handleUser}
                             type="password"

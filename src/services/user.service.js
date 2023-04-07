@@ -12,7 +12,9 @@ class UserService {
                 localStorage.setItem('token', response.data);
                 return response;
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                throw new Error(error);
+            });
     }
 
     sendRegData({ email, password }) {
@@ -26,11 +28,9 @@ class UserService {
                 Accept: '*/*',
                 'content-Type': 'application/json'
             }
-        )
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => console.log(error));
+        ).catch((error) => {
+            throw new Error(error);
+        });
     }
 
     logout() {

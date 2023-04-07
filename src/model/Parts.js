@@ -62,7 +62,6 @@ class Parts {
         try {
             const { data } = await this.services.updateCard(card);
             runInAction(() => {
-                console.log(data);
                 this.state = 'done';
             });
         } catch (error) {

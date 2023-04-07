@@ -8,11 +8,9 @@ class PartService {
         API.post('AddModelCard', card, {
             Accept: '*/*',
             'content-Type': 'application/json'
-        })
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => console.log(error));
+        }).catch((error) => {
+            throw new Error(error);
+        });
     }
 
     async updateCard(params) {
@@ -21,45 +19,25 @@ class PartService {
             const data = await API.put(`UpdateCarCard/?${param}`);
             return data;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
-
-    // updateCard(card) {
-    //     API.put('UpdateCardCard', card, {
-    //         Accept: '*/*',
-    //         'content-Type': 'application/json'
-    //     })
-    //         .then((response) => {
-    //             console.log(response);
-    //         })
-    //         .catch((error) => console.log(error));
-    // }
 
     async getCards() {
         try {
             const data = await API.get('GetCarCards');
             return data;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
-
-    // async getCard(params) {
-    //     try {
-    //         const data = await API.get(`GetCarCard/${params}`);
-    //         return data;
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
 
     searchCard(search) {
         try {
             const data = search;
             return data;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -69,7 +47,7 @@ class PartService {
             const data = await API.delete(`DeleteCarCard/?${param}`);
             return data;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 }

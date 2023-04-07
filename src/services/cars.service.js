@@ -9,7 +9,7 @@ class CarService {
             const data = await API.get('Model/GetModels');
             return data;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -19,7 +19,7 @@ class CarService {
             const data = await API.get(`Model/GetEngines?${param}`);
             return data;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -33,7 +33,7 @@ class CarService {
             const data = await API.get(`Model/GetComplecations?${param}`);
             return data;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -44,7 +44,7 @@ class CarService {
             const data = await API.get(`Model/GetPartsGroups?${param}`);
             return data;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -64,7 +64,7 @@ class CarService {
             const data = await API.get(`Model/GetPartsSubGroups?${param}`);
             return data;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -85,7 +85,7 @@ class CarService {
             const data = await API.get(`Model/GetParts?${param}`);
             return data;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 }
